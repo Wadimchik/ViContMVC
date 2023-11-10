@@ -1,0 +1,39 @@
+﻿@using static ViContMVC.Controllers.HomeController;
+
+@model Plot;
+
+<script>
+    $(document).ready(function () { //
+
+        var id = @Html.Raw(Json.Serialize(Model.id))
+            TESTER2 = document.getElementsByClassName('Plot');
+        console.log(id);
+        var data = [
+            {
+                x: @Html.Raw(Json.Serialize(Model.x)),
+                y: @Html.Raw(Json.Serialize(Model.y)),
+                type: 'scatter'
+            }
+        ];
+        var layout = {
+            autosize: true,
+            width: 350,
+            height: 350,
+            margin: {
+                l: 5,
+                r: 5,
+                b: 5,
+                t: 5,
+                pad: 4
+            },
+            paper_bgcolor: '#7f7f7f',
+            plot_bgcolor: '#c7c7c7'
+        };
+        var config = { responsive: true }
+
+        Plotly.newPlot(@Html.Raw(Json.Serialize(Model.id)), data, layout, config);
+
+
+    }); //
+
+</script>

@@ -1,0 +1,40 @@
+﻿@*<head>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"
+          rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+            integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
+@*    <script>
+    $(document).ready(function () {
+            //string id = "#" + @ViewBag.Tool_id;
+            console.log($(this).attr('id'));
+            $(".ui-widget-content").draggable().resizable();
+     });
+</script>
+</head>*@
+<div class="container ui-widget-content" id="container_@ViewBag.Tool_id">
+    <div class="border-up">
+        <button class="drag-off-btn">DragOFF</button>
+        <button class="drag-on-btn">DragON</button>
+        <button class="close-btn">Close</button>
+        <script>
+            $('#content').on('click', '.close-btn', function () {
+                var id = $(this).parent().parent().attr('id');
+                $("#" + id).hide();
+                console.log('#' + id);
+            });
+        </script>
+    </div>
+<div class="Tool" id="@ViewBag.Tool_id" @*class="ui-widget-content"*@>
+    <p>Drag me around</p>
+    <div class="Plot" id="@ViewBag.Plot_id">
+        <button class="plot-btn">New Plot</button>
+    </div>
+</div>
+</div>

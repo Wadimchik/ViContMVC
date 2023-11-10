@@ -1,0 +1,79 @@
+﻿@using static ViContMVC.Controllers.HomeController;
+
+@model Plot;
+
+
+<head>
+    <link href="~/css/main.css" rel="stylesheet" />
+</head>
+<input name="auto" type="checkbox" value="auto" class="auto-btn" id="checkbox_@Html.Raw(Json.Serialize(Model.id))"> Auto
+<button type="button" class="stop-btn">Stop</button>
+<div class="Plot" id=@Html.Raw(Json.Serialize(Model.id))>
+@*    <input name="auto" type="checkbox" value="auto" class="auto-btn" id="checkbox_@Html.Raw(Json.Serialize(Model.id))"> Auto*@
+    <script>
+        $('.auto-btn').change(function () {
+            var intervalID = setInterval(function () {
+                var formData = new FormData();
+                var id = @Html.Raw(Json.Serialize(Model.id));
+                formData.append("id",id);
+                console.log(id);
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AutoPlot", "Home")',
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: formData,
+                    success: function (res) {
+                       // alert("asd");
+                        $('#'+id).html(res);
+                    }
+                });
+            }, 1000);
+            console.log(intervalID);
+        });
+        $('#content').on('click', '.stop-btn', function () {
+            console.log('stop');
+            clearInterval(intervalID);
+        });
+    </script>
+    @*<p><input name="notauto" type="radio" value="notauto" onchange="handleChange(this);"> Not auto</p>*@
+    <div>    
+        <button class="plot-btn">New Plot</button>
+    </div>
+</div>
+<script>
+    $(document).ready(function () { //
+        
+        var id = @Html.Raw(Json.Serialize(Model.id))
+            TESTER2 = document.getElementsByClassName('Plot');
+            console.log(id);
+        var data = [
+            {
+                x: @Html.Raw(Json.Serialize(Model.x)),
+                y: @Html.Raw(Json.Serialize(Model.y)),
+                type: 'scatter'
+            }
+        ];
+        var layout = {
+            autosize: true,
+            width: 500,
+            height: 500,
+            margin: {
+                l: 5,
+                r: 5,
+                b: 5,
+                t: 5,
+                pad: 4
+            },
+            paper_bgcolor: '#7f7f7f',
+            plot_bgcolor: '#c7c7c7'
+        };
+        var config = { responsive: true }
+
+        Plotly.newPlot(@Html.Raw(Json.Serialize(Model.id)), data, layout, config );
+
+
+    }); //
+
+</script>

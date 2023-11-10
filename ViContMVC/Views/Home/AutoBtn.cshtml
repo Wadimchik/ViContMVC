@@ -1,0 +1,23 @@
+﻿
+<script>
+    $('.auto-btn').change(function () {
+        setInterval(function () {
+            var formData = new FormData();
+            var id = @Html.Raw(Json.Serialize(Model.id));
+            formData.append("id", id);
+            console.log(id);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AutoPlot", "Home")',
+                contentType: false,
+                processData: false,
+                cache: false,
+                data: formData,
+                success: function (res) {
+                    // alert("asd");
+                    $('#' + id).html(res);
+                }
+            });
+        }, 1000);
+    });
+</script>
